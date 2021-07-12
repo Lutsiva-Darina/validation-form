@@ -15,11 +15,10 @@ function App() {
     switch(e.target.name){
       case 'email':
         setEmailDirty (true)
-        console.log(setEmailDirty);
-        break
+        break;
       case 'password':
       setPasswordDirty(true)
-      break
+      break;
     }
   };
   const emailHandler = (e) =>{
@@ -32,10 +31,11 @@ function App() {
       setEmailError("");
     }
 }
-const passwordHandler =(e)=>{
+const passwordHandler = (e) =>{
   setPassword(e.target.value);
-  if(e.target.value<3 || e.target.value>8){
-    setPasswordError("Пароль должен быть длинее 3 и меньше 8");
+  console.log(e.target.value);
+  if(e.target.value.length<3 || e.target.value.length>8){
+    setPasswordError("Password must be longer than 3 and less than 8");
     if(!e.target.value){
       setPasswordError("Пароль не может быть пустым");
     }
@@ -51,14 +51,14 @@ const passwordHandler =(e)=>{
                 <form className="form">
                     <div className="inputBlock">
                     {(emailDirty &&emailError) &&<div className ="close"></div>}
-                    {(emailDirty &&emailError) &&<div className="wrong">Wrong</div>}
+                    {(emailDirty &&emailError) &&<div className="wrong">Invalid username</div>}
                     {/* {(setEmailError=="") &&<div>Yes</div>} */}
                     <input onChange={e=>(emailHandler(e))} onBlur ={e=>blurHandler(e)} value ={email} name="email" id="input__email" type="text" placeholder="E-mail" />
                     </div>
                     <div className="inputBlock inputBlockPassword">
                     {(passwordDirty &&passwordError) &&<div className ="close"></div>}
-                    {(passwordDirty &&passwordError) &&<div className="wrong">Wrong</div>}
-               <input onChange={e=>(passwordHandler(e))} onBlur ={e=>blurHandler(e)} value ={password} name="password" id="input__password" type="password" placeholder="Password"/>
+                    {(passwordDirty &&passwordError) &&<div className="wrong">{passwordError}</div>}
+               <input onChange={e=>(passwordHandler(e))} value ={password} onBlur ={e=>blurHandler(e)} name="password" id="input__password" type="password" placeholder="Password"/>
                     </div>
                <button type='submit'>Login</button>
                <p className="title__attention">Forgot your password? <a href="#" className="title__link">Reset it here.</a></p>
