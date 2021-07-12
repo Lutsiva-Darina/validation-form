@@ -1,6 +1,6 @@
 import logo from './logo.svg';
 import './styleForm.css';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 function App() {
   const [email,setEmail] = useState('');
@@ -10,7 +10,16 @@ function App() {
   const [emailError,setEmailError] = useState("Email error");
   const [passwordError,setPasswordError] = useState("Password error");
   const [emailSuccess,setEmailSucces] = useState("Email success");
+  const [formValid, setFormValid] = useState(false);
   // const [passwordESuccess,setPasswordSucces] = useState("Password success");
+  useEffect(()=>{
+if(emailError ||passwordError){
+setFormValid(false);
+}
+else{
+  setFormValid(true);
+}
+  },[emailError,passwordError])
   const blurHandler = (e) =>{
     switch(e.target.name){
       case 'email':
@@ -60,7 +69,7 @@ const passwordHandler = (e) =>{
                     {(passwordDirty &&passwordError) &&<div className="wrong">{passwordError}</div>}
                <input onChange={e=>(passwordHandler(e))} value ={password} onBlur ={e=>blurHandler(e)} name="password" id="input__password" type="password" placeholder="Password"/>
                     </div>
-               <button type='submit'>Login</button>
+               <button disabled={!formValid} type='submit'>Login</button>
                <p className="title__attention">Forgot your password? <a href="#" className="title__link">Reset it here.</a></p>
                 </form>
             </div>
